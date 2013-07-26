@@ -14,22 +14,22 @@ class Battle
     def run
         if players.length < 2 then p "Minimum of 2 fighters required." else
             playerString = players.map{|p| "\x033#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
-            print "The battle starts with #{players.length} players: #{playerString}\n";
+            puts "The battle starts with #{players.length} players: #{playerString}";
             while players.length > 1 do
                 ps=players.sample(2);
                 weapon = ps[0].weapons.sample()
                 h=rand((weapon.max_damage-weapon.min_damage))+weapon.min_damage;
                 ps[1].health -= h;
                 if ps[1].health <= 0 then
-                    print "\x033#{ps[0].name}\x0F does \x02#{h}\xF damage to \x035#{ps[1].name}\x0F and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\x0F.\n";
+                    puts "\x033#{ps[0].name}\x0F does \x02#{h}\xF damage to \x035#{ps[1].name}\x0F and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\x0F.";
                     players.delete(ps[1]);
                 else
                     if @showProgress then
-                        print "\x033#{ps[0].name}\x0F does \x02#{h}\x0F damage to \x035#{ps[1].name}\x0F using attack \x02#{weapon.name}\x0F\n";
+                        puts "\x033#{ps[0].name}\x0F does \x02#{h}\x0F damage to \x035#{ps[1].name}\x0F using attack \x02#{weapon.name}\x0F";
                     end
                 end
             end
-            players.each{|p| print "\x035#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!\n"};
+            players.each{|p| puts "\x035#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
         end
     end
 end
