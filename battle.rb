@@ -21,7 +21,7 @@ class Battle
                 h=rand(weapon.max_damage)+weapon.min_damage;
                 ps[1].health -= h;
                 if ps[1].health <= 0 then
-                    p "#{ps[0].name} does #{h} damage to #{ps[1].name} and kills #{ps[1].name} (#{ps[1].health}hp left) using attack #{weapon.name}.";
+                    p "#{ps[0].name} does #{h} damage to #{ps[1].name} and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack #{weapon.name}.";
                     players.delete(ps[1]);
                 else
                     if @showProgress then
