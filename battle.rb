@@ -18,7 +18,7 @@ class Battle
             while players.length > 1 do
                 ps=players.sample(2);
                 weapon = ps[0].weapons.sample()
-                h=rand(weapon.max_damage)+weapon.min_damage;
+                h=rand((weapon.max_damage-weapon.min_damage))+weapon.min_damage;
                 ps[1].health -= h;
                 if ps[1].health <= 0 then
                     print "#{ps[0].name} does \x02#{h}\xF damage to #{ps[1].name} and\x35 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\xF.";
