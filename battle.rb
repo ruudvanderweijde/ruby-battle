@@ -29,7 +29,7 @@ class Battle
                     end
                 end
             end
-            players.each{|p| puts "\x035#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
+            players.each{|p| puts "\x033#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
         end
     end
 end
