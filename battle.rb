@@ -39,7 +39,7 @@ class Player
     def initialize(name)
         @health = 100;
         @name = name;
-        @color = rand(12);
+        @color = [2,3,4,5,6,7,10,12].sample();
     end
 
     def add weapon
