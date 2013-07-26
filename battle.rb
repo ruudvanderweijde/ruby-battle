@@ -13,7 +13,7 @@ class Battle
 
     def run
         if players.length < 2 then p "Minimum of 2 fighters required." else
-            playerString = players.map{|p| "\x033#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
+            playerString = players.map{|p| "\x03#{p.color}#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
             puts "The battle starts with #{players.length} players: #{playerString}";
             while players.length > 1 do
                 ps=players.sample(2);
