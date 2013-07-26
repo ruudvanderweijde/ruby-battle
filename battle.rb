@@ -21,15 +21,15 @@ class Battle
                 h=rand(weapon.max_damage)+weapon.min_damage;
                 ps[1].health -= h;
                 if ps[1].health <= 0 then
-                    print "#{ps[0].name} does \x02#{h}\xF damage to #{ps[1].name} and\x35 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\xF.";
+                    print "#{ps[0].name} does \x02#{h}\xF damage to #{ps[1].name} and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\x0F.\n";
                     players.delete(ps[1]);
                 else
                     if @showProgress then
-                        print "#{ps[0].name} does \x02#{h}\xF damage to #{ps[1].name} using attack \x02#{weapon.name}\xF";
+                        print "#{ps[0].name} does \x02#{h}\x0F damage to #{ps[1].name} using attack \x02#{weapon.name}\x0F\n";
                     end
                 end
             end
-            players.each{|p| p "\x35#{p.name} won\xF#{if p.health == 100 then ' flawless!!' end}!"};
+            players.each{|p| print "\x035#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!\n"};
         end
     end
 end
