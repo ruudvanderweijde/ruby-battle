@@ -75,6 +75,17 @@ class Goku < Player
         add(Weapon.new('Spirit Bomb', 80, 100));
     end
 end
+class Ryu < Player
+    def initialize(name)
+        super(name)
+        add(Weapon.new('Punch', 0, 25));
+        add(Weapon.new('Kick', 0, 25));
+        add(Weapon.new('Hard Punch', 25, 50));
+        add(Weapon.new('Hard Kick', 25, 50));
+        add(Weapon.new('Hadoken', 50, 100));
+        add(Weapon.new('Shoryuken', 50, 100));
+    end
+end
 class GJ < Player
     def initialize(name)
         super(name)
