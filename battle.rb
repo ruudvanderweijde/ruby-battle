@@ -1,40 +1,40 @@
 class Battle
-    attr_accessor :players, :showProgress;
-    def initialize(players, progress = true)
+    attr_accessor :fighters, :showProgress;
+    def initialize(fighters, progress = true)
         @showProgress = progress;
-        players.each{|x| add(Player.subclasses.sample().new(x));};
+        fighters.each{|x| add(Fighter.subclasses.sample().new(x));};
         run;
     end
 
-    def add player
-        @players ||= []
-        @players << player
+    def add fighter
+        @fighters ||= []
+        @fighters << fighter
     end
 
     def run
-        if players.length < 2 then p "Minimum of 2 fighters required." else
-            playerString = players.map{|p| "\x03#{p.color}#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
-            puts "The battle starts with #{players.length} players: #{playerString}";
-            while players.length > 1 do
-                ps=players.sample(2);
+        if fighters.length < 2 then p "Minimum of 2 fighters required." else
+            playerString = fighters.map{|p| "\x03#{p.color}#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
+            puts "The battle starts with #{fighters.length} fighters: #{playerString}";
+            while fighters.length > 1 do
+                ps=fighters.sample(2);
                 weapon = ps[0].weapons.sample()
                 h=rand((weapon.max_damage-weapon.min_damage))+weapon.min_damage;
                 ps[1].health -= h;
                 if ps[1].health <= 0 then
                     puts "\x03#{ps[0].color}#{ps[0].name}\x0F does \x02#{h}\xF damage to \x03#{ps[1].color}#{ps[1].name}\x0F and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\x0F.";
-                    players.delete(ps[1]);
+                    fighters.delete(ps[1]);
                 else
                     if @showProgress then
                         puts "\x03#{ps[0].color}#{ps[0].name}\x0F does \x02#{h}\x0F damage to \x03#{ps[1].color}#{ps[1].name}\x0F using attack \x02#{weapon.name}\x0F";
                     end
                 end
             end
-            players.each{|p| puts "\x03#{p.color}#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
+            fighters.each{|p| puts "\x03#{p.color}#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
         end
     end
 end
 
-class Player
+class Fighter
     attr_accessor :name, :health, :color, :weapons;
     @@colors = ["02","03","04","05","06","07","10","12"].shuffle()
     def initialize(name)
@@ -49,7 +49,7 @@ class Player
     end
 end
 
-class BruceLee < Player
+class BruceLee < Fighter
     def initialize(name)
         super(name)
         add(Weapon.new('Single Direct Attack', 0, 20));
@@ -59,7 +59,7 @@ class BruceLee < Player
         add(Weapon.new('Attack by Drawing', 80, 100));
     end
 end
-class Goku < Player
+class Goku < Fighter
     def initialize(name)
         super(name)
         add(Weapon.new('Tail Attack', 0, 20));
@@ -69,7 +69,7 @@ class Goku < Player
         add(Weapon.new('Spirit Bomb', 80, 100));
     end
 end
-class Ryu < Player
+class Ryu < Fighter
     def initialize(name)
         super(name)
         add(Weapon.new('Punch', 0, 25));
@@ -80,12 +80,21 @@ class Ryu < Player
         add(Weapon.new('Shoryuken', 50, 100));
     end
 end
-class GJ < Player
+class GJ < Fighter
     def initialize(name)
         super(name)
         add(Weapon.new('Meta Tag', 0, 20));
-        add(Weapon.new('Google Search', 20, 80));
-        add(Weapon.new('Ejaculaat', 20, 80));
+        add(Weapon.new('Google Search', 20, 50));
+        add(Weapon.new('Ejaculaat', 50, 100));
+    end
+end
+
+class Executioner < Fighter
+    def initialize(name)
+        super(name)
+        add(Weapon.new('Stoning', 0, 20));
+        add(Weapon.new('Skinning', 20, 50));
+        add(Weapon.new('Dismemberment', 50, 100));
     end
 end
 
