@@ -46,14 +46,6 @@ class Player
         @weapons ||= []
         @weapons << weapon
     end
-
-
-     def subclasses
-       @subclasses ||= []
-       @subclasses.inject( [] ) do |list, subclass|
-         list.push(subclass, *subclass.subclasses)
-       end
-     end
 end
 
 class BruceLee < Player
