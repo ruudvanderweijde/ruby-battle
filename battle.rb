@@ -36,10 +36,11 @@ end
 
 class Player
     attr_accessor :name, :health, :color, :weapons;
+    @@colors = [2,3,4,5,6,7,10,12].shuffle()
     def initialize(name)
         @health = 100;
         @name = name;
-        @color = [2,3,4,5,6,7,10,12].sample();
+        @color = @@colors.shift();
     end
 
     def add weapon
