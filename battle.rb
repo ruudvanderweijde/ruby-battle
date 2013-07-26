@@ -83,6 +83,8 @@ end
 class GJ < Player
     def initialize(name)
         super(name)
+        add(Weapon.new('Meta Tag', 0, 20));
+        add(Weapon.new('Google Search', 20, 80));
         add(Weapon.new('Ejaculaat', 20, 80));
     end
 end
