@@ -16,27 +16,27 @@ class Battle
             fighterString = fighters.map{|p| "\x03#{p.color}#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
             puts "The battle starts with #{fighters.length} fighters: #{fighterString}";
             while fighters.length > 1 do
-                ps=fighters.sample(2);
-                weapon = ps[0].weapons.sample()
-                h=rand((weapon.max_damage-weapon.min_damage))+weapon.min_damage;
-                ps[1].health -= h;
+                attacker, victim = fighters.sample(2)
+                weapon = attacker.weapons.sample()
+                damage = rand(weapon.min_damage..weapon.max_damage)
+                victim.health -= damage
                 variables = {
-                    :fighter1 => '\x03'+ps[0].color+ps[0].name+'\x0F',
-                    :fighter2 => '\x03'+ps[1].color+ps[1].name+'\x0F',
-                    :damage => '\x02'+h.to_s+'\xF damage',
+                    :attacker => '\x03'+attacker.color+attacker.name+'\x0F',
+                    :victim => '\x03'+victim.color+victim.name+'\x0F',
+                    :damage => '\x02'+damage.to_s+'\xF damage',
                     :weapon => sprintf(weapon.context, { :weaponName => '\x03'+weapon.name+'\x02'})
                 }
-                if ps[1].health <= 0 then
-                    puts sprintf('%{fighter1} does %{damage} to %{fighter2} %{weapon} and kills %{fighter2}.', variables);
-                    fighters.delete(ps[1]);
+                if victim.health <= 0 then
+                    puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.', variables);
+                    fighters.delete(victim);
                 else
                     if @showProgress then
-                        puts sprintf('%{fighter1} does %{damage} to %{fighter2} %{weapon}.', variables);
+                        puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon}.', variables);
                     end
                 end
             end
-            puts sprintf('%{fighter1} won #{if ps[0].health == 100 then " flawless!!" end}!', variables);
-            fighters.each{|p| puts "\x03#{p.color}#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
+            flawless = if attacker.health == 100 then " Flawless!!" end
+            puts sprintf('%{attacker} won!', variables) + flawless.to_s;
         end
     end
 end
@@ -84,10 +84,11 @@ class Ryu < Fighter
         add(Weapon.new('Hard Punch', 25, 50));
         add(Weapon.new('Hard Kick', 25, 50));
         add(Weapon.new('Hadoken', 50, 100));
+        add(Weapon.new('Hurricane kick', 50, 100));
         add(Weapon.new('Shoryuken', 50, 100));
     end
 end
-class GJ < Fighter
+class SEOMaster < Fighter
     def initialize(name)
         super(name)
         add(Weapon.new('Meta Tag', 0, 20));
