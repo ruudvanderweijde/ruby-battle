@@ -16,20 +16,18 @@ class Battle
             fighterString = fighters.map{|p| "\x03#{p.color}#{p.name}\x0F (\x035#{p.class.to_s}\x0F)" }.join(", ")
             puts "The battle starts with #{fighters.length} fighters: #{fighterString}";
             while fighters.length > 1 do
-                ps=fighters.sample(2);
-                weapon = ps[0].weapons.sample()
-                h=rand((weapon.max_damage-weapon.min_damage))+weapon.min_damage;
-                ps[1].health -= h;
-                if ps[1].health <= 0 then
-                    puts "\x03#{ps[0].color}#{ps[0].name}\x0F does \x02#{h}\xF damage to \x03#{ps[1].color}#{ps[1].name}\x0F and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\x0F.";
-                    fighters.delete(ps[1]);
-                else
-                    if @showProgress then
-                        puts "\x03#{ps[0].color}#{ps[0].name}\x0F does \x02#{h}\x0F damage to \x03#{ps[1].color}#{ps[1].name}\x0F using attack \x02#{weapon.name}\x0F";
-                    end
+                attacker, victim = fighters.sample(2)
+                weapon = attacker.weapons.sample()
+                damage = rand(weapon.min_damage..weapon.max_damage)
+                victim.health -= damage
+                if victim.health <= 0 then
+                    puts "\x03#{attacker.color}#{attacker.name}\x0F does \x02#{damage}\xF damage to \x03#{victim.color}#{victim.name}\x0F and\x035 kills #{victim.name}\xF (#{victim.health}hp left) using attack \x02#{weapon.name}\x0F.";
+                    fighters.delete(victim);
+                elsif @showProgress then
+                    puts "\x03#{attacker.color}#{attacker.name}\x0F does \x02#{damage}\x0F damage to \x03#{victim.color}#{victim.name}\x0F using attack \x02#{weapon.name}\x0F";
                 end
             end
-            fighters.each{|p| puts "\x03#{p.color}#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
+            fighters.each{|winner| puts "\x03#{winner.color}#{winner.name} won\x0F#{if winner.health == 100 then ' flawless!!' end}!"};
         end
     end
 end
@@ -77,10 +75,11 @@ class Ryu < Fighter
         add(Weapon.new('Hard Punch', 25, 50));
         add(Weapon.new('Hard Kick', 25, 50));
         add(Weapon.new('Hadoken', 50, 100));
+        add(Weapon.new('Hurricane kick', 50, 100));
         add(Weapon.new('Shoryuken', 50, 100));
     end
 end
-class GJ < Fighter
+class SEOMaster < Fighter
     def initialize(name)
         super(name)
         add(Weapon.new('Meta Tag', 0, 20));
