@@ -20,15 +20,22 @@ class Battle
                 weapon = ps[0].weapons.sample()
                 h=rand((weapon.max_damage-weapon.min_damage))+weapon.min_damage;
                 ps[1].health -= h;
+                variables = {
+                    :fighter1 => '\x03'+ps[0].color+ps[0].name+'\x0F',
+                    :fighter2 => '\x03'+ps[1].color+ps[1].name+'\x0F',
+                    :damage => '\x02'+h.to_s+'\xF damage',
+                    :weapon => sprintf(weapon.context, { :weaponName => '\x03'+weapon.name+'\x02'})
+                }
                 if ps[1].health <= 0 then
-                    puts "\x03#{ps[0].color}#{ps[0].name}\x0F does \x02#{h}\xF damage to \x03#{ps[1].color}#{ps[1].name}\x0F and\x035 kills #{ps[1].name}\xF (#{ps[1].health}hp left) using attack \x02#{weapon.name}\x0F.";
+                    puts sprintf('%{fighter1} does %{damage} to %{fighter2} %{weapon} and kills %{fighter2}.', variables);
                     fighters.delete(ps[1]);
                 else
                     if @showProgress then
-                        puts "\x03#{ps[0].color}#{ps[0].name}\x0F does \x02#{h}\x0F damage to \x03#{ps[1].color}#{ps[1].name}\x0F using attack \x02#{weapon.name}\x0F";
+                        puts sprintf('%{fighter1} does %{damage} to %{fighter2} %{weapon}.', variables);
                     end
                 end
             end
+            puts sprintf('%{fighter1} won #{if ps[0].health == 100 then " flawless!!" end}!', variables);
             fighters.each{|p| puts "\x03#{p.color}#{p.name} won\x0F#{if p.health == 100 then ' flawless!!' end}!"};
         end
     end
@@ -100,7 +107,7 @@ end
 
 class Weapon
     attr_accessor :name, :min_damage, :max_damage, :context;
-    def initialize(name, min_damage, max_damage, context = '%s')
+    def initialize(name, min_damage, max_damage, context = 'using %{weaponName}')
         @name = name;
         @min_damage = min_damage;
         @max_damage = max_damage;
