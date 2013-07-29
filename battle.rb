@@ -21,10 +21,10 @@ class Battle
                 damage = rand(weapon.min_damage..weapon.max_damage)
                 victim.health -= damage
                 variables = {
-                    :attacker => '\x03'+attacker.color+attacker.name+'\x0F',
-                    :victim => '\x03'+victim.color+victim.name+'\x0F',
-                    :damage => '\x02'+damage.to_s+'\xF damage',
-                    :weapon => sprintf(weapon.context, { :weaponName => '\x03'+weapon.name+'\x02'})
+                    :attacker => ''+attacker.color+attacker.name+'',
+                    :victim => ''+victim.color+victim.name+'',
+                    :damage => ''+damage.to_s+' damage',
+                    :weapon => sprintf(weapon.context, { :weaponName => ''+weapon.name+''})
                 }
                 if victim.health <= 0 then
                     puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.', variables);
