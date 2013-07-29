@@ -22,7 +22,7 @@ class Battle
                 victim.health -= damage
                 variables = {
                     :attacker => "\x03"+attacker.color+attacker.name+"\x0F",
-                    :attackerClass => attacker.class.to_s,
+                    :attackerClass => "\x035"+attacker.class.to_s+"\x0F",
                     :victim => "\x03"+victim.color+victim.name+"\x0F",
                     :damage => "\x02"+damage.to_s+"\x0F damage",
                     :weapon => sprintf(weapon.context, { :weaponName => "\x02"+weapon.name+"\x0F"})
