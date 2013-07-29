@@ -22,6 +22,7 @@ class Battle
                 victim.health -= damage
                 variables = {
                     :attacker => "\x03"+attacker.color+attacker.name+"\x0F",
+                    :attackerClass => attacker.class.to_s,
                     :victim => "\x03"+victim.color+victim.name+"\x0F",
                     :damage => "\x02"+damage.to_s+"\x0F damage",
                     :weapon => sprintf(weapon.context, { :weaponName => "\x02"+weapon.name+"\x0F"})
@@ -34,7 +35,7 @@ class Battle
                 end
             end
             flawless = if attacker.health == 100 then " Flawless!!" end
-            puts sprintf('%{attacker} won!', variables) + flawless.to_s;
+            puts sprintf('%{attacker} (%{attackerClass})  won!', variables) + flawless.to_s;
         end
     end
 end
