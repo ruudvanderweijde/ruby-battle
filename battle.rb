@@ -104,6 +104,24 @@ class Executioner < Fighter
     end
 end
 
+class CaptainPlanet < Fighter
+    def initialize(name)
+        super(name)
+        add(Weapon.new('Earth', 0, 50));
+        add(Weapon.new('Fire', 0, 50));
+        add(Weapon.new('Wind', 0, 50));
+        add(Weapon.new('Water', 0, 50));
+        add(Weapon.new('Hearth', 0, 50));
+        
+        add(Weapon.new('Near invincibility', 50, 100));
+        add(Weapon.new('Invisibility', 50, 100));
+        add(Weapon.new('Telepathy', 50, 100));
+        add(Weapon.new('Empathy', 50, 100));
+        add(Weapon.new('Flight', 50, 100));
+        add(Weapon.new('Superhuman strength', 50, 100));
+    end
+end
+
 class Weapon
     attr_accessor :name, :min_damage, :max_damage, :context;
     def initialize(name, min_damage, max_damage, context = 'using %{weaponName}')
