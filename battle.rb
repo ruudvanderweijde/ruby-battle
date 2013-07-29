@@ -29,10 +29,8 @@ class Battle
                 if victim.health <= 0 then
                     puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.', variables);
                     fighters.delete(victim);
-                else
-                    if @showProgress then
-                        puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon}.', variables);
-                    end
+                elsif @showProgress then
+                    puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon}.', variables);
                 end
             end
             flawless = if attacker.health == 100 then " Flawless!!" end
