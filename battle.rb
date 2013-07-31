@@ -97,6 +97,15 @@ class Executioner < Fighter
     end
 end
 
+class Gaetan < Fighter
+    def initialize(name)
+        super(name)
+        add(Weapon.new('MSN', 0, 1));
+        add(Weapon.new('Smakken', 99, 99));
+        add(Weapon.new('Angela', 0, 1));
+    end
+end
+
 class Weapon
     attr_accessor :name, :min_damage, :max_damage, :context;
     def initialize(name, min_damage, max_damage, context = '%s')
