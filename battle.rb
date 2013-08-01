@@ -20,14 +20,22 @@ class Battle
                 weapon = attacker.weapons.sample()
                 damage = rand(weapon.min_damage..weapon.max_damage)
                 victim.health -= damage
+                variables = {
+                    :attacker => "\x03"+attacker.color+attacker.name+"\x0F",
+                    :attackerClass => "\x035"+attacker.class.to_s+"\x0F",
+                    :victim => "\x03"+victim.color+victim.name+"\x0F",
+                    :damage => "\x02"+damage.to_s+"\x0F damage",
+                    :weapon => sprintf(weapon.context, { :weaponName => "\x02"+weapon.name+"\x0F"})
+                }
                 if victim.health <= 0 then
-                    puts "\x03#{attacker.color}#{attacker.name}\x0F does \x02#{damage}\xF damage to \x03#{victim.color}#{victim.name}\x0F and\x035 kills #{victim.name}\xF (#{victim.health}hp left) using attack \x02#{weapon.name}\x0F.";
+                    puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.', variables);
                     fighters.delete(victim);
                 elsif @showProgress then
-                    puts "\x03#{attacker.color}#{attacker.name}\x0F does \x02#{damage}\x0F damage to \x03#{victim.color}#{victim.name}\x0F using attack \x02#{weapon.name}\x0F";
+                    puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon}.', variables);
                 end
             end
-            fighters.each{|winner| puts "\x03#{winner.color}#{winner.name} won\x0F#{if winner.health == 100 then ' flawless!!' end}!"};
+            flawless = if attacker.health == 100 then " Flawless!!" end
+            puts sprintf('%{attacker} (%{attackerClass})  won!', variables) + flawless.to_s;
         end
     end
 end
@@ -97,18 +105,27 @@ class Executioner < Fighter
     end
 end
 
-class Gaetan < Fighter
+class CaptainPlanet < Fighter
     def initialize(name)
         super(name)
-        add(Weapon.new('MSN', 0, 1));
-        add(Weapon.new('Smakken', 99, 99));
-        add(Weapon.new('Angela', 0, 1));
+        add(Weapon.new('Earth', 0, 50));
+        add(Weapon.new('Fire', 0, 50));
+        add(Weapon.new('Wind', 0, 50));
+        add(Weapon.new('Water', 0, 50));
+        add(Weapon.new('Hearth', 0, 50));
+        
+        add(Weapon.new('Near invincibility', 50, 100));
+        add(Weapon.new('Invisibility', 50, 100));
+        add(Weapon.new('Telepathy', 50, 100));
+        add(Weapon.new('Empathy', 50, 100));
+        add(Weapon.new('Flight', 50, 100));
+        add(Weapon.new('Superhuman strength', 50, 100));
     end
 end
 
 class Weapon
     attr_accessor :name, :min_damage, :max_damage, :context;
-    def initialize(name, min_damage, max_damage, context = '%s')
+    def initialize(name, min_damage, max_damage, context = 'using %{weaponName}')
         @name = name;
         @min_damage = min_damage;
         @max_damage = max_damage;
