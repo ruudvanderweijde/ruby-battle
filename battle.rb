@@ -132,6 +132,20 @@ class Gaetan < Fighter
     end
 end
 
+#http://pokemondb.net/pokedex/pikachu
+class Pikachu < Fighter
+    def initialize(name)
+        super(name)
+        add(Weapon.new('Feint', 0, 30));
+        add(Weapon.new('Quick Attack', 0, 40));
+        add(Weapon.new('Thundershock', 0, 40));
+        add(Weapon.new('Discharce', 0, 80));
+        add(Weapon.new('Slam', 0, (80*0.75)));
+        add(Weapon.new('Thunderbolt', 0, 95));
+        add(Weapon.new('Thunder', 0, (120*0.7)));        
+    end
+end
+
 class Weapon
     attr_accessor :name, :min_damage, :max_damage, :context;
     def initialize(name, min_damage, max_damage, context = 'using %{weaponName}')
@@ -139,8 +153,7 @@ class Weapon
         @min_damage = min_damage;
         @max_damage = max_damage;
         @context = context;
-    end
-    
+    end 
 end
 
 BEGIN {
