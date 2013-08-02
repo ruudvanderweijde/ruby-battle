@@ -35,7 +35,7 @@ class Battle
                 end
             end
             flawless = if attacker.health == 100 then " Flawless!!" end
-            puts sprintf('%{attacker} (%{attackerClass})  won!', variables) + flawless.to_s;
+            puts sprintf('%{attacker} (%{attackerClass}) won!', variables) + flawless.to_s;
         end
     end
 end
