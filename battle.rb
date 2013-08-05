@@ -30,7 +30,7 @@ class Battle
                 }
                 if victim.health <= 0 then
                     if victim == attacker then
-                        puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselves\x0F %{weapon} and dies. \x02What a loser!\x0F", variables);
+                        puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselves\x0F %{weapon} and dies. %{attacker} \x02is such a loser!\x0F", variables);
                     else 
                         puts sprintf("%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.", variables);
                     end
