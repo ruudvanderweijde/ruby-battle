@@ -37,7 +37,7 @@ class Battle
                     fighters.delete(victim);
                 elsif @showProgress then
                     if victim == attacker then
-                        puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselve\x0F %{weapon}.", variables);
+                        puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselves\x0F %{weapon}.", variables);
                     else
                         puts sprintf("%{attacker} does %{damage} to %{victim} %{weapon}.", variables);
                     end
