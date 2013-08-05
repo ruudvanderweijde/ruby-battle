@@ -149,9 +149,9 @@ class Pikachu < Fighter
         add(Weapon.new('Quick Attack', 0, 40));
         add(Weapon.new('Thundershock', 0, 40));
         add(Weapon.new('Discharce', 0, 80));
-        add(Weapon.new('Slam', 0, (80*0.75)));
+        add(Weapon.new('Slam', 0, (80*0.75).ceil));
         add(Weapon.new('Thunderbolt', 0, 95));
-        add(Weapon.new('Thunder', 0, (120*0.7)));        
+        add(Weapon.new('Thunder', 0, (120*0.7).ceil));        
     end
 end
 
