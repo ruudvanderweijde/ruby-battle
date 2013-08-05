@@ -17,6 +17,7 @@ class Battle
             puts "The battle starts with #{fighters.length} fighters: #{fighterString}";
             while fighters.length > 1 do
                 attacker, victim = fighters.sample(2)
+                if rand(0..10) === 10 then victim = attacker end
                 weapon = attacker.weapons.sample()
                 damage = rand(weapon.min_damage..weapon.max_damage)
                 victim.health -= damage
@@ -28,10 +29,18 @@ class Battle
                     :weapon => sprintf(weapon.context, { :weaponName => "\x02"+weapon.name+"\x0F"})
                 }
                 if victim.health <= 0 then
-                    puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.', variables);
+                    if victim == attacker then
+                        puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselves\x0F %{weapon} and dies. \x02What a loser!\x0F", variables);
+                    else 
+                        puts sprintf("%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.", variables);
+                    end
                     fighters.delete(victim);
                 elsif @showProgress then
-                    puts sprintf('%{attacker} does %{damage} to %{victim} %{weapon}.', variables);
+                    if victim == attacker then
+                        puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselve\x0F %{weapon}.", variables);
+                    else
+                        puts sprintf("%{attacker} does %{damage} to %{victim} %{weapon}.", variables);
+                    end
                 end
             end
             flawless = if attacker.health == 100 then " Flawless!!" end
