@@ -2,7 +2,16 @@ class Battle
     attr_accessor :fighters, :showProgress;
     def initialize(fighters, progress = true)
         @showProgress = progress;
-        fighters.each{|x| add(Fighter.subclasses.sample().new(x));};
+        fighters.each{|x| 
+            if x.include? ":" then
+                x, deriv = x.split(":", 2);
+                if inst = Fighter.subclasses.select { |x| x.to_s() == deriv }.sample() then 
+                    add(inst.new(x)); 
+                    next
+                end
+            end
+            add(Fighter.subclasses.sample().new(x));
+        };
         run;
     end
 
