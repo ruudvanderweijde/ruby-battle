@@ -40,10 +40,11 @@ class Battle
                 if victim.health <= 0 then
                     if victim == attacker then
                         puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselves\x0F %{weapon} and dies. %{attacker} \x02is such a loser!\x0F", variables);
+                        fighters.delete(attacker);
                     else 
                         puts sprintf("%{attacker} does %{damage} to %{victim} %{weapon} and kills %{victim}.", variables);
+                        fighters.delete(victim);
                     end
-                    fighters.delete(victim);
                 elsif @showProgress then
                     if victim == attacker then
                         puts sprintf("%{attacker} fails to attack and does %{damage} to \x02themselves\x0F %{weapon}.", variables);
